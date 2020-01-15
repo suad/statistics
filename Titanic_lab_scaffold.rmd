@@ -1,0 +1,111 @@
+---
+title: "Investigating the effect of Class on Surviving the Titanic"
+author: "Suad Al Darra"
+date: "24 September 2018"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+
+## Question of Interest 
+
+Was the socioeconomic Class of passengers on the Titanic a predictor of whether a passenger survived or not ?  
+
+### Load the libraries needed.
+
+The libraries needed are 'tidyverse' and 'titanic'.  If you are running this code on your own pc you will have to install them,  if you are running this in a lab they are already installed.
+
+Load up the libraries as follows:   
+
+```{r }
+library(tidyverse) 
+library(titanic)
+
+```
+
+The data are contained in a package called 'titanic'. The dataset iteslf is called titanic_train.
+
+## Subjective Impressions
+
+
+The key variable of interest 'Survival' (representing whether a passenger survived or not) is coded as 0 and 1.  To make the analysis clearer to interpret create a new variable which recoded the 0 and 1 to No and Yes respectively.
+
+```{r}
+passengers <- titanic_train %>% 
+ mutate(Survived = ifelse(Survived == 0, "No", "Yes"))
+
+```
+
+There are three levels of the (categorical) variable Pclass namely 1st, 2nd and 3rd (coded as 1,2,3).
+
+A table of the proportion of survivors by Class (with clearer labels) is as follows:
+
+
+Task: Create the table of summaries needed by inserting the relevant r chunk
+
+```{r}
+passengers <- passengers %>% 
+ mutate(ClassLabel = ifelse(Pclass == 1, "FirstClass", ifelse(Pclass==2,"SecondClass","ThirdClass")))
+```
+
+Task: Create the table of corresponding percentages by inserting the relevant r chunk
+
+```{r}
+passengers %>% select(Survived,ClassLabel) %>% table() %>% prop.table()
+
+```
+
+
+Task: add some text here to interpret the results from the tables you have just created.
+
+**Most people who didn't survive were third class. 41% died. While the highest rate of survival was for First Class. (Sad world)**
+
+
+Time to create some barcharts.  Some of the code will be given, some you will have to copy from the example file given and adapt accoordingly.  Hint, look at the plots relating to gender and adapt them by replacing Gender with Class (i.e. Pclass variable).
+
+# Bar chart of survival overall
+
+Task: Create a bar chart of survival overall by inserting the relevant r chunk
+
+```{r}
+ggplot(data=passengers, aes(Survived))+
+     geom_bar()
+```
+
+# Plot bar chart of survival by Class 
+
+Task: Create a stacked barchart of survival by Class by inserting the relevant r chunk.
+```{r}
+ggplot(data=passengers, aes(Survived))+
+     geom_bar(aes(fill=ClassLabel), position="fill") +
+     ylab("Percent")
+```
+
+
+
+Task: Once you have created the plot write your interpretation here based on these plots.
+
+**The plots make it easier to interpret the previous results. We can see in the overall plot how less people survived. Then we break it down, we can see how most of those who didn't make it were Third Class, while the ratio of the survival looks split between the three classes.**
+
+Bonus question.  How would you create a stacked bar chart of survival by Class and Gender ?  (Hint facet_grid() will be useful).
+
+Task: Create the faceted barchart by inserting the relevant r chunk.
+```{r}
+pl <- ggplot(data=passengers, aes(Survived))+
+     geom_bar(aes(fill=Sex), position="fill") +
+     ylab("Percent")
+pl+facet_grid(.~ClassLabel)
+
+```
+
+**Females were the majority of passengers who survived, which make sense since they were given priority and were allowed to the limitred rescue boats before men. (Totally based on the movie)**
+
+# Conlclusion
+
+Task: Write a short conclusion of whether you think Class is a useful predictor of whether a person survived the titanic and the role Gender  plays in addition.  Knit the file as a Word document (using the Knit icon above).  
+
+**Class is indeed an important predictor of whether a person survived or not, specailly for third class, but it is not enough. As we saw, the survival bar was split between the three classes. Adding the gender feature will help boost the accuracy since Females are most of the survivors.**
+
+Save your markdown and Word file and Turn them in on the course Blackboard page once the deadline date has been set.
