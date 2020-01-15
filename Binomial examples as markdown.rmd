@@ -1,0 +1,65 @@
+---
+title: "Binomial Distribution examples"
+author: "John Newell"
+date: "25 September 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Calculating probabilities using the binomial distribution
+
+## Camera test example.
+
+ n=3, p=0.8
+ What is the prob that two cameras pass in 3 tests ?
+ 
+This can be answered by assuming that the random variable of interest (i.e. the number of passes) follows a binomial distribution with probability 0.8 and number of trials equal to 3.  The command bnneded is '# dbinom(x, size, prob)' and the required probability is:
+ 
+ 
+```{r}
+dbinom(x=2, size=3, prob=0.8)
+```
+
+i.e. the probability of two passing in 3 tests is 0.34.
+
+
+## Pollutant example
+
+Let X denote the number of samples that contain the pollutant in the next 18 samples analyzed. Then X is a binomial random variable with p = 0.1 and n = 18. The question askes you to find the probability that, in the next 18 samples exactly 2 contain the pollutant.
+
+the required probability is:
+```{r}
+
+```
+ 
+ 
+```{r}
+dbinom(x=2, size=18, prob=0.1)
+```
+
+i.e. the probability that in the next 18 samples exactly 2 contain the pollutant is 0.28.
+
+The second part of the question asks you to determine the probability that
+there are between 3 and 6 samples contain pollutants i.e. 3 <= X < 7. You can do this several ways.
+
+Long way:
+
+```{r}
+  dbinom(x=3, size=18, prob=0.1) + dbinom(x=4, size=18, prob=0.1) +
+  dbinom(x=5, size=18, prob=0.1) + dbinom(x=6, size=18, prob=0.1)
+```
+
+or more cleverly using the sum function in R as follows:
+
+```{r}
+sum(dbinom(3:6, size = 18, prob=0.1))
+```
+
+
+Both give the same answer, a probability of 0.265.  How would you interpret this probability ?
+
+

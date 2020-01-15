@@ -1,0 +1,41 @@
+---
+title: "Poisson Distribution examples"
+author: "John Newell"
+date: "25 September 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Calculating probabilities using the Poisson distribution
+
+## Flaws on Copper Wire example.
+
+Suppose that the number of flaws on a thin copper wire follows a Poisson distribution with a mean of 2.3 flaws per mm. 
+
+Find the probability of exactly 2 flaws in 1 mm of wire
+ 
+ 
+```{r}
+dpois(x=2, lambda=2.3)
+```
+
+i.e. the probability of exactly two flaws in 1mm of wire is 0.265.
+
+## Flaws on Copper Wire example revisited.
+
+Suppose that the number of flaws on a thin copper wire follows a Poisson distribution with a mean of 2.3 flaws per mm. Determine the probability of 10 flaws in 5 mm of wire.
+
+The required probability is:
+```{r}
+dpois(x=10, lambda=2.3*5)
+```
+ 
+i.e. the probability that in the next 18 samples exactly 2 contain the pollutant is 0.11.
+
+How would you interpret this probability ?
+
+

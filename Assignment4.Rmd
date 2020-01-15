@@ -1,0 +1,98 @@
+---
+title: "Assignment3"
+author: "Suad Al Darra - 17234582"
+date: "19 Oct 2018"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Binomial Distribution
+Q1
+At a certain airport, 75% of the flights arrive on time. A sample of 10 flights is studied.
+
+###i. Find the probability that all 10 of the flights were on time.
+```{r}
+dbinom(10,10,0.75)
+```
+0.0563 which is not very likely to happen
+
+###ii. Find the probability that 7 to 9 flights were on time
+```{r}
+
+sum(dbinom(7:9,10,0.75))
+```
+0.7195616 
+
+Q2. A large industrial firm allows a discount on any invoice that is paid within 30 days. Of all
+invoices, 10% receive the discount. In a company audit, 50 invoices are sampled at random.
+
+
+###i. What is the probability that fewer than 10 of the 50 sampled invoices receive the discount?
+```{r}
+n <- 50
+x <-10
+p <-0.10
+sum(dbinom(0:x-1,n,p)) #or sum(pbinom(x-1,n,p,lower.tail = TRUE))
+
+```
+Less than 10 P(X=0,1,2..9) = 0.9754621 
+
+###ii. Calculate the mean to determine the most likely number of discounts that company will have to offer.
+```{r}
+#mean = n * p 
+n * p
+```
+the most likely number of discounts is 5
+
+###iii. Chebyshev's inequality states that at least 75% of the observations will be in the range of the mean ±2 times the standard deviation. Calculate the standard deviation and use Chebyshev's inequality to provide a range of values that likely account for 75% of discounts the firm expect to give.
+
+```{r}
+sd <- sqrt((n*p*(1-p)))
+sd
+```
+Standard deviation is 2.121. Range of values most likely to be in in the 75% discounts are [5-2.121,5+2.121] = [2.879, 7.121]
+Rounding, most likely number of discounts will be between 3 and 7.
+
+
+
+## Poisson Distribution.
+
+Q3. The number of cars arriving at a given roundabout follows a Poisson distribution with a
+mean rate of 3 per second.
+
+###i. What is the probability that 3 cars arrive in a given second?
+```{r}
+dpois(3,3)
+```
+
+###ii. What is the probability that more than 3 cars arrive in a given second?
+
+```{r}
+ppois(3,3,lower=FALSE)
+```
+
+Q4. The number of hits on a certain website follows a Poisson distribution with a mean rate
+of 4 per minute.
+
+###i. What is the probability that 5 messages are received in a given minute?
+```{r}
+dpois(x = 5,lambda = 4)
+```
+
+###ii. What is the probability that 9 messages are received in 1.5 minutes?
+```{r}
+dpois(x = 9,lambda = 4*1.5)
+```
+
+###iii. What is the probability that fewer than 3 messages are received in a period of 30 seconds?
+```{r}
+
+sum(dpois(x = 0:3,lambda = 4/2))
+```
+
